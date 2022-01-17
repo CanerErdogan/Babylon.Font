@@ -9,13 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CanerErdogan/Babylon.Font.git"
+    "url": "git+https://github.com/ycw/Babylon.Font.git"
   },
   "keywords": [],
   "author": "ycw (https://github.com/ycw)",
   "contributors": [
-    "Max Graey (https://github.com/MaxGraey)",
-    "Caner Erdogan (https://github.com/CanerErdogan"
+    "Max Graey (https://github.com/MaxGraey)"
   ],
   "license": "MIT",
   "bugs": {
