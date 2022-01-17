@@ -10,11 +10,11 @@ import { Compiler, Shape } from "./compiler";
 //
 
 type PolygonMeshOption = {
-    backUVs?: Vector4;
+    backUVs?: BABYLON.Vector4;
     depth?: number;
-    faceColors?: Color4[];
-    faceUV?: Vector4[];
-    frontUVs?: Vector4;
+    faceColors?: BABYLON.Color4[];
+    faceUV?: BABYLON.Vector4[];
+    frontUVs?: BABYLON.Vector4;
     sideOrientation?: number;
     updatable?: boolean;
 }
@@ -70,9 +70,9 @@ export class Font {
 //
 
 interface IBabylon {
-    Mesh: typeof Mesh;
-    MeshBuilder: typeof MeshBuilder;
-    Vector3: typeof Vector3
+    Mesh: typeof BABYLON.Mesh;
+    MeshBuilder: typeof BABYLON.MeshBuilder;
+    Vector3: typeof BABYLON.Vector3
 }
 
 export class TextMeshBuilder {
@@ -85,9 +85,9 @@ export class TextMeshBuilder {
     private createFromShapes(
         shapes: Shape[],
         option: PolygonMeshOption,
-        scene?: Scene,
+        scene?: BABYLON.Scene,
     ) {
-        const meshes: Mesh[] = [];
+        const meshes: BABYLON.Mesh[] = [];
         const toVec3 = (vert) => new this.babylon.Vector3(vert[0], 0, -vert[1]);
         for (const { fill, holes } of shapes) {
             const mesh = this.babylon.MeshBuilder.CreatePolygon('', {
@@ -118,7 +118,7 @@ export class TextMeshBuilder {
         size: number,
         ppc: number,
         eps: number,
-    } & PolygonMeshOption, scene?: Scene) {
+    } & PolygonMeshOption, scene?: BABYLON.Scene) {
         const shapes = Font.Compile(font, text, size, ppc, eps);
         return this.createFromShapes(shapes, option, scene);
     }

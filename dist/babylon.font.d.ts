@@ -1,9 +1,5 @@
+/// <reference types="babylonjs" />
 import * as loader from '@assemblyscript/loader';
-import { Scene } from '@babylonjs/core/scene';
-import { Mesh } from '@babylonjs/core/Meshes/mesh';
-import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder';
-import { Vector4, Vector3 } from '@babylonjs/core/Maths/math.vector';
-import { Color4 } from '@babylonjs/core/Maths/math.color';
 
 interface IPathCommand {
     type: string;
@@ -34,11 +30,11 @@ declare class Compiler {
 }
 
 declare type PolygonMeshOption = {
-    backUVs?: Vector4;
+    backUVs?: BABYLON.Vector4;
     depth?: number;
-    faceColors?: Color4[];
-    faceUV?: Vector4[];
-    frontUVs?: Vector4;
+    faceColors?: BABYLON.Color4[];
+    faceUV?: BABYLON.Vector4[];
+    frontUVs?: BABYLON.Vector4;
     sideOrientation?: number;
     updatable?: boolean;
 };
@@ -51,9 +47,9 @@ declare class Font {
     static Compile(font: Font, name: string, size: number, ppc: number, eps: number): Shape[];
 }
 interface IBabylon {
-    Mesh: typeof Mesh;
-    MeshBuilder: typeof MeshBuilder;
-    Vector3: typeof Vector3;
+    Mesh: typeof BABYLON.Mesh;
+    MeshBuilder: typeof BABYLON.MeshBuilder;
+    Vector3: typeof BABYLON.Vector3;
 }
 declare class TextMeshBuilder {
     private babylon;
@@ -66,7 +62,7 @@ declare class TextMeshBuilder {
         size: number;
         ppc: number;
         eps: number;
-    } & PolygonMeshOption, scene?: Scene): Mesh;
+    } & PolygonMeshOption, scene?: BABYLON.Scene): BABYLON.Mesh;
 }
 declare class Metrics {
     private font;
