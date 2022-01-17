@@ -1,4 +1,3 @@
-// import * as BABYLON from "babylonjs";
 import {Scene} from "@babylonjs/core/scene";
 import {Mesh} from "@babylonjs/core/Meshes/mesh";
 import {MeshBuilder} from "@babylonjs/core/Meshes/meshBuilder";
