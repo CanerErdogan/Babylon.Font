@@ -14,12 +14,10 @@ interface IPathCommand {
     x2?: number;
     y2?: number;
 }
-declare type Header = {
+interface MyAPI {
+    memory: WebAssembly.Memory;
     compile(bytesUsed: number, fmt: string, ppc: number, eps: number): number;
-};
-declare type Instaniated = loader.ResultObject & {
-    exports: loader.ASUtil & Header;
-};
+}
 declare type Vertex = [number, number];
 declare type Polygon = Vertex[];
 declare type Shape = {
@@ -28,8 +26,8 @@ declare type Shape = {
 };
 declare class Compiler {
     private wasm;
-    constructor(wasm: Instaniated);
-    static Build(wasmUrl?: string): Promise<Compiler>;
+    constructor(wasm: loader.ASUtil & MyAPI);
+    static Build(wasmUrl: string): Promise<Compiler>;
     encode(cmds: IPathCommand[], buffer: ArrayBuffer): number;
     compileEncoded(buffer: ArrayBuffer, bytesUsed: number, fmt: string, ppc: number, eps: number): Shape[];
     compile(cmds: IPathCommand[], fmt: string, ppc: number, eps: number): Shape[];

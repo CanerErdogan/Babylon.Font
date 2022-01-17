@@ -68,7 +68,7 @@ export function compile(bytesUsed: usize, fmt: u8, ppc: u8, eps: f64): CompileRe
   let polygons: Array<Polygon> = [];
 
   let i: usize = 0;
-  let iP: i32 = 0;
+  let iP: usize = 0;
   let cmd: u8;
   let x0: f64, y0: f64;
   let x1: f64, y1: f64;
@@ -83,7 +83,7 @@ export function compile(bytesUsed: usize, fmt: u8, ppc: u8, eps: f64): CompileRe
       i += SZ;
       y = load<f64>(i);
       i += SZ;
-      polygons[iP] = [new Vertex(x, y)];
+      polygons[iP] = [{ x, y }];
       continue;
     }
     if (cmd == 76) { // L
@@ -91,7 +91,7 @@ export function compile(bytesUsed: usize, fmt: u8, ppc: u8, eps: f64): CompileRe
       i += SZ;
       y = load<f64>(i);
       i += SZ;
-      polygons[iP].push(new Vertex(x, y));
+      polygons[iP].push({ x, y });
       continue;
     }
     if (cmd == 81) { // 'Q'
@@ -317,10 +317,10 @@ function interpQ(
     $0 = $$ * $$;
     $1 = 2 * $$ * t;
     $2 = t * t;
-    unchecked(result[i] = new Vertex(
-      $0 * p0x + $1 * p1x + $2 * p2x,
-      $0 * p0y + $1 * p1y + $2 * p2y
-    ));
+    unchecked(result[i] = {
+      x: $0 * p0x + $1 * p1x + $2 * p2x,
+      y: $0 * p0y + $1 * p1y + $2 * p2y
+    });
   }
   return result;
 }
@@ -358,10 +358,10 @@ function interpC(
     $4 = $3 * t;            // t ^3      .. coeff#3
     $5 = 3 * $1 * t;        //          ... coeff#1
     $6 = 3 * $0 * $3;       //          ... coeff#2
-    unchecked(result[i] = new Vertex(
-      $2 * p0x + $5 * p1x + $6 * p2x + $4 * p3x,
-      $2 * p0y + $5 * p1y + $6 * p2y + $4 * p3y
-    ));
+    unchecked(result[i] = {
+      x: $2 * p0x + $5 * p1x + $6 * p2x + $4 * p3x,
+      y: $2 * p0y + $5 * p1y + $6 * p2y + $4 * p3y
+    });
   }
   return result;
 }
@@ -474,10 +474,10 @@ function tinystep(
   const dx = v1.x - v0x;
   const dy = v1.y - v0y;
   const d = Math.hypot(dx, dy);
-  return new Vertex(
-    v0x + dx / d * e,
-    v0y + dy / d * e
-  );
+  return {
+    x: v0x + dx / d * e,
+    y: v0y + dy / d * e
+  };
 }
 
 
@@ -565,7 +565,7 @@ function boundingBoxOf(polygon: Polygon): BBox {
     yMin = Math.min(vy, yMin);
     yMax = Math.max(vy, yMax);
   }
-  return new BBox(xMin, yMin, xMax, yMax);
+  return { xMin, yMin, xMax, yMax };
 }
 
 

@@ -1,29 +1,36 @@
-import typescript from "rollup-plugin-typescript2";
-import { terser } from "rollup-plugin-terser";
-import dts from "rollup-plugin-dts";
+import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
+import typescript from 'rollup-plugin-typescript2';
+import minify from 'rollup-plugin-babel-minify';
+import dts from 'rollup-plugin-dts';
 
 export default [{
-    input: "./src/index.ts",
+    input: './src/babylon.font.ts',
     output: {
-        file: "./build/babylon.font.js",
-        format: "es",
-        sourcemap: false
+        file: './dist/babylon.font.js',
+        format: 'es',
+        sourcemap: true
     },
     plugins: [
+        // Resolve source specifier by node style
+        resolve(),
+        // If a source is in commonjs style, transpiles it to ESM
+        commonjs(),
+        // Intergrate with typescript
         typescript({
+            tsconfig: 'tsconfig.json',
             useTsconfigDeclarationDir: true
         }),
-        terser({
-            format: {
-                comments: false
-            }
+        // Minify
+        minify({
+            comments: false
         })
     ]
 }, {
-    input: "./typings/index.d.ts",
+    input: './dist/dts/babylon.font.d.ts',
     output: [{
-        file: "./build/babylon.font.d.ts",
-        format: "es",
+        file: './dist/babylon.font.d.ts',
+        format: 'es',
     }],
     plugins: [
         dts()

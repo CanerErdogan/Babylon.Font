@@ -1,4 +1,3 @@
 node_modules/
-typings/
-build/untouched.*
+dist/dts/
 .idea/
