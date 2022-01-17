@@ -47,7 +47,8 @@ export class Compiler {
   ) { }
 
   static async Build(wasmUrl?: string) {
-    wasmUrl ??= new URL('optimized.wasm', import.meta.url).toString();
+    if (!wasmUrl) wasmUrl = new URL('optimized.wasm', import.meta.url).toString();
+    // wasmUrl ??= new URL('optimized.wasm', import.meta.url).toString();
 
     const imports = {
       // env: {
