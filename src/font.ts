@@ -1,6 +1,10 @@
-import * as BABYLON from "babylonjs";
+// import * as BABYLON from "babylonjs";
+import {Scene} from "@babylonjs/core/scene";
+import {Mesh} from "@babylonjs/core/Meshes/mesh";
+import {MeshBuilder} from "@babylonjs/core/Meshes/meshBuilder";
+import {Vector3, Vector4} from "@babylonjs/core/Maths/math.vector";
+import {Color4} from "@babylonjs/core/Maths/math.color";
 import { Compiler, Shape } from "./compiler";
-
 
 
 //
@@ -8,11 +12,11 @@ import { Compiler, Shape } from "./compiler";
 //
 
 type PolygonMeshOption = {
-  backUVs?: BABYLON.Vector4;
+  backUVs?: Vector4;
   depth?: number;
-  faceColors?: BABYLON.Color4[];
-  faceUV?: BABYLON.Vector4[];
-  frontUVs?: BABYLON.Vector4;
+  faceColors?: Color4[];
+  faceUV?: Vector4[];
+  frontUVs?: Vector4;
   sideOrientation?: number;
   updatable?: boolean;
 }
@@ -68,9 +72,9 @@ export class Font {
 //
 
 interface IBabylon {
-  Mesh: typeof BABYLON.Mesh;
-  MeshBuilder: typeof BABYLON.MeshBuilder;
-  Vector3: typeof BABYLON.Vector3
+  Mesh: typeof Mesh;
+  MeshBuilder: typeof MeshBuilder;
+  Vector3: typeof Vector3
 }
 
 export class TextMeshBuilder {
@@ -83,9 +87,9 @@ export class TextMeshBuilder {
   private createFromShapes(
     shapes: Shape[],
     option: PolygonMeshOption,
-    scene?: BABYLON.Scene,
+    scene?: Scene,
   ) {
-    const meshes: BABYLON.Mesh[] = [];
+    const meshes: Mesh[] = [];
     const toVec3 = (vert) => new this.babylon.Vector3(vert[0], 0, -vert[1]);
     for (const { fill, holes } of shapes) {
       const mesh = this.babylon.MeshBuilder.CreatePolygon('', {
@@ -116,7 +120,7 @@ export class TextMeshBuilder {
     size: number,
     ppc: number,
     eps: number,
-  } & PolygonMeshOption, scene?: BABYLON.Scene) {
+  } & PolygonMeshOption, scene?: Scene) {
     const shapes = Font.Compile(font, text, size, ppc, eps);
     return this.createFromShapes(shapes, option, scene);
   }
